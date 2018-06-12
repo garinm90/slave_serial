@@ -18,8 +18,9 @@ ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
 def get_playlist():
     files = os.listdir(playlist_path)
     os.path.isfile
-    print os.path.isfile(playlist_path+files)
-    print files
+    if os.path.isfile(playlist_path + "".join(files)):
+        play.append(files[0])
+        print(play)
 
 def check_play():
 	while True:
