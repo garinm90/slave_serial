@@ -1,17 +1,24 @@
+#Reads serial and executes commands
 #!/usr/bin/env python
 
 import time
 import serial
 import subprocess
 import threading
+import os
 
-playlist = ["1"]
+
+playlist = "/home/fpp/media/playlists"
 play = ["/opt/fpp/bin.pi/fpp", "-P", "1", "comp2fAfixt2ff.fseq"]
 stop = ["/opt/fpp/bin.pi/fpp", "-d"]
 flag = 0
 ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
 time.sleep(117)
 
+def get_playlist():
+    for root, subdir, files in os.walk(playlsit):
+        for name in files:
+            print os.path.join(path,name)
 
 def check_play():
 	while True:
