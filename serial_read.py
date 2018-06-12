@@ -4,11 +4,11 @@ import time
 import serial
 import subprocess
 import threading
-import os.path
+import os
 
 
 playlist_path = "/home/fpp/media/playlists"
-play = ["/opt/fpp/bin.pi/fpp", "-P", "1", "comp2fAfixt2ff.fseq"]
+play = ["/opt/fpp/bin.pi/fpp", "-P",]
 stop = ["/opt/fpp/bin.pi/fpp", "-d"]
 flag = 0
 ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
@@ -16,11 +16,10 @@ ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
 
 
 def get_playlist():
-    for playlist_path, subdir, files  in os.walk(playlist_path):
-        for name in subdir:
-            print os.path.join(playlist_path,name)
-        for name in files:
-            print os.path.join(playlist_path,name)
+    files = os.listdir(playlist_path)
+    os.path.isfile
+    print os.path.isfile(playlist_path+files)
+    print files
 
 def check_play():
 	while True:
