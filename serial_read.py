@@ -11,8 +11,11 @@ playlist_path = "/home/fpp/media/playlists/"
 play = ["/opt/fpp/bin.pi/fpp", "-P",]
 stop = ["/opt/fpp/bin.pi/fpp", "-d"]
 flag = 0
-ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
-#time.sleep(117)
+try:
+	ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
+except:
+	pass
+time.sleep(117)
 
 
 def get_playlist():
@@ -31,11 +34,9 @@ def check_play():
 	while True:
 		time.sleep(3)
 		playStatus = subprocess.check_output(["/opt/fpp/bin.pi/fpp", "-s"])
-        	playStatus = playStatus.split(',')
-        	print playStatus
-		print playStatus[1]
-		if int(playStatus[1]) == 0:
-			subprocess.call(play)
+        playStatus = playStatus.split(',')
+	    if int(playStatus[1]) == 0:
+		    subprocess.call(play)
 		else:
 			pass
 
@@ -50,11 +51,11 @@ def serCheck():
 	#serData = serData.decode("ascii")  #.replace('\x00', '').replace("\r\n", "")
 	#if there is smth do smth
 		if len(serData) >= 1:
-			print serData
+			#print serData
 		if serData == 'p':
 			subprocess.call(stop)
 			subprocess.call(play)
-			print("Play")
+			#print("Play")
 		#elif serData == 't':
 		#	play.append(playlist[1])
         	#	subprocess.call(stop)
