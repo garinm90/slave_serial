@@ -6,8 +6,8 @@ import subprocess
 import threading
 import os
 
-
-playlist_path = "/home/fpp/media/playlists"
+lines = []
+playlist_path = "/home/fpp/media/playlists/"
 play = ["/opt/fpp/bin.pi/fpp", "-P",]
 stop = ["/opt/fpp/bin.pi/fpp", "-d"]
 flag = 0
@@ -17,10 +17,15 @@ ser = serial.Serial(port='/dev/ttyUSB0',baudrate = 115200, timeout=1)
 
 def get_playlist():
     files = os.listdir(playlist_path)
+    sequence = ""
     os.path.isfile
     if os.path.isfile(playlist_path + "".join(files)):
         play.append(files[0])
-        print(play)
+        with open(playlist_path + "".join(files)) as file:
+            for line in file:
+                lines.append(line.strip())
+        sequence = "".join(lines[1].lstrip('s').split(','))
+        play.append(sequence)        
 
 def check_play():
 	while True:
@@ -56,6 +61,7 @@ def serCheck():
         	#	subprocess.call(play)
 	
 if __name__ == "__main__":
+	get_playlist()
 	t1 = threading.Thread(target = check_play)
 	t2 = threading.Thread(target = serCheck)
 	t1.setDaemon(True)
