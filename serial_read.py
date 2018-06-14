@@ -32,7 +32,7 @@ def get_playlist():
 
 
 def check_play():
-   while True:
+    while True:
         time.sleep(3)
         playStatus = subprocess.check_output(["/opt/fpp/bin.pi/fpp", "-s"])
         playStatus = playStatus.split(',')
