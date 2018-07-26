@@ -6,15 +6,13 @@ import subprocess
 import threading
 import os
 
+previous_seconds = 0
+interval = 5
 lines = []
 playlist_path = "/home/fpp/media/playlists/"
 play = ["/opt/fpp/bin.pi/fpp", "-P", ]
 stop = ["/opt/fpp/bin.pi/fpp", "-d"]
 flag = 0
-try:
-    ser = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=1)
-except:
-    pass
 time.sleep(117)
 
 
@@ -32,7 +30,6 @@ def get_playlist():
 
 
 def check_play():
-    while True:
         time.sleep(3)
         playStatus = subprocess.check_output(["/opt/fpp/bin.pi/fpp", "-s"])
         playStatus = playStatus.split(',')
@@ -41,9 +38,11 @@ def check_play():
 
 
 def serCheck():
-    while True:
         # read data from serial port
-        time.sleep(1)
+        try:
+            ser = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=1)
+        except:
+            pass
         serData = ser.readline()
         serData = serData.strip('\n')
         serData = serData.strip('\r')
@@ -52,15 +51,15 @@ def serCheck():
             subprocess.call(stop)
             subprocess.call(play)
 
+def play_timer(seconds):
+    global previous_seconds
+    if (time.time() - previous_seconds > interval):
+        previous_seconds = time.time()
+#        print(previous_seconds)
+        check_play()
 
 if __name__ == "__main__":
-    get_playlist()
-    t1 = threading.Thread(target=check_play)
-    t2 = threading.Thread(target=serCheck)
-    t1.setDaemon(True)
-    t2.setDaemon(True)
-    t1.start()
-    t2.start()
     while True:
-        time.sleep(.5)
-        pass
+        get_playlist()
+        serCheck()
+        play_timer(interval)
