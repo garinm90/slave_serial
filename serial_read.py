@@ -42,7 +42,7 @@ def serCheck():
         try:
             ser = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=1)
         except:
-            pass
+            return
         serData = ser.readline()
         serData = serData.strip('\n')
         serData = serData.strip('\r')
