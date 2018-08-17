@@ -14,6 +14,10 @@ play = ["/opt/fpp/bin.pi/fpp", "-P", ]
 stop = ["/opt/fpp/bin.pi/fpp", "-d"]
 flag = 0
 time.sleep(117)
+try:
+    ser = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=1)
+    except:
+        return
 
 
 def get_playlist():
@@ -39,10 +43,6 @@ def check_play():
 
 def serCheck():
         # read data from serial port
-        try:
-            ser = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=1)
-        except:
-            return
         serData = ser.readline()
         serData = serData.strip('\n')
         serData = serData.strip('\r')
