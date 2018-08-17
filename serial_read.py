@@ -17,7 +17,7 @@ time.sleep(117)
 try:
     ser = serial.Serial(port='/dev/ttyUSB0', baudrate=115200, timeout=1)
     except:
-        return
+        pass
 
 
 def get_playlist():
